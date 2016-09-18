@@ -25,8 +25,8 @@ spec = do
   describe "++" $ do
     it "works!" $ do
       "imm" ++ "imm" `shouldBe` ("immimm" :: String)
-      "imm" ++ s `shouldBe` ("immimm" :: String)
-      "imm" ++ b `shouldBe` ("immimm" :: B.ByteString)
-
-      s ++ b `shouldBe` ("sb" :: B.ByteString)
-      b ++ b `shouldBe` ("bb" :: B.ByteString)
+      "imm" ++ s `shouldBe` ("imms" :: String)
+      "imm" ++ lt `shouldBe` ("immlt" :: LT.Text)
+      "imm" ++ t `shouldBe` ("immt" :: T.Text)
+      "imm" ++ lb `shouldBe` ("immlb" :: LB.ByteString)
+      "imm" ++ b `shouldBe` ("immb" :: B.ByteString)
