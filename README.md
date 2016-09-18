@@ -1,1 +1,1 @@
-# strings - utilities string variants
+# strings - utilities for string variants
