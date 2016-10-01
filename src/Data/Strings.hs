@@ -27,6 +27,9 @@ instance StringLiteralInferencer String where string x = x
 
 class BinaryOperation l r a where (++) :: l -> r -> a
 
+-- | You can append string variants.
+-- >>> ("foo" ++ "bar") :: String
+-- "foobar"
 instance {-# INCOHERENT #-} BinaryOperation                                 B.ByteString  B.ByteString  B.ByteString  where (++) l r = l <> r
 instance {-# INCOHERENT #-} BinaryOperation                                 B.ByteString  LB.ByteString B.ByteString  where (++) l r = l ++ LB.toStrict r
 instance {-# INCOHERENT #-} BinaryOperation                                 B.ByteString  T.Text        B.ByteString  where (++) l r = l ++ E.encodeUtf8 r
