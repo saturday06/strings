@@ -12,6 +12,13 @@ import           Data.Function              (($))
 import           Data.Monoid                ((<>))
 import           Data.String                (String)
 
+import qualified Data.ByteString
+import qualified Data.ByteString.Char8
+import qualified Data.ByteString.Lazy
+import qualified Data.ByteString.Lazy.Char8
+import qualified Data.Text
+import qualified Data.Text.Lazy
+
 import qualified Data.ByteString            as B
 import qualified Data.ByteString.Builder    as BB
 import qualified Data.ByteString.Char8      as CB
@@ -25,11 +32,14 @@ import qualified Data.Text.Lazy.Encoding    as LE
 class StringLiteralInferencer a where string :: a -> String
 instance StringLiteralInferencer String where string x = x
 
-class BinaryOperation l r a where (++) :: l -> r -> a
+class BinaryOperation l r a where
+  -- | You can append string variants.
+  -- >>> ("foo" ++ "bar") :: String
+  -- "foobar"
+  -- >>> (Data.Text.pack "foo" ++ Data.Text.pack "bar") :: Data.Text.Text
+  -- "foobar"
+  (++) :: l -> r -> a
 
--- | You can append string variants.
--- >>> ("foo" ++ "bar") :: String
--- "foobar"
 instance {-# INCOHERENT #-} BinaryOperation                                 B.ByteString  B.ByteString  B.ByteString  where (++) l r = l <> r
 instance {-# INCOHERENT #-} BinaryOperation                                 B.ByteString  LB.ByteString B.ByteString  where (++) l r = l ++ LB.toStrict r
 instance {-# INCOHERENT #-} BinaryOperation                                 B.ByteString  T.Text        B.ByteString  where (++) l r = l ++ E.encodeUtf8 r

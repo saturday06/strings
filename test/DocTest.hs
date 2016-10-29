@@ -10,7 +10,7 @@ sources :: FilePath -> IO [FilePath]
 sources path = do
   pathIsDir <- doesDirectoryExist path
   if pathIsDir then do
-    children <- fmap (filter (\child -> "." /= take 1 child)) $ listDirectory path
+    children <- fmap (filter (\child -> "." /= take 1 child)) $ getDirectoryContents path
     fmap (foldl (++) []) $ mapM sources $ map (path </>) children
   else do
     return [path]

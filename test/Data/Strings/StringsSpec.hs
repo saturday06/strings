@@ -1,7 +1,7 @@
 {-# LANGUAGE ExtendedDefaultRules #-}
 {-# LANGUAGE OverloadedStrings    #-}
 
-module Data.String.Spec (spec) where
+module Data.Strings.StringsSpec (spec) where
 
 import           Data.Strings
 import           Prelude                    hiding ((++))
@@ -22,7 +22,7 @@ b = "b" :: B.ByteString
 
 spec :: Spec
 spec = do
-  describe "++" $ do
+  describe "concatenation operator (++)" $ do
     it "works!" $ do
       "imm" ++ "imm" `shouldBe` ("immimm" :: String)
       "imm" ++ s `shouldBe` ("imms" :: String)
